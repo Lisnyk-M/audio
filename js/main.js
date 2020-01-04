@@ -1,11 +1,10 @@
 // import {dou} from '.dog.js';
-window.onload=function(){
-    //document.getElementsByClassName('btn')[0].addEventListener('onclick', function(){sound.play();})   
+window.onload=function(){     
     var ind = document.getElementsByClassName("indicate");
 	//ind[0].innerHTML = dou();
 	//console.log(ind);
 	//ind[0].innerHTML = 'pes';
-    //ind.innerText = 'gggg';
+
     var x = 0, z = 0;
 	var vec3 = new THREE.Vector3;
 
@@ -102,7 +101,7 @@ window.onload=function(){
     function play_sound(){
         if (turn < 0){
             sound.play();
-            console.log(sound);
+            // console.log(sound);
             document.getElementsByClassName('btn')[0].innerHTML = 'Stop';
         }else{
             sound.stop();
@@ -125,7 +124,7 @@ window.onload=function(){
             cubes[i].position.z = -15;
             scene.add(cubes[i]);
         }
-        console.log(cubes);       
+        // console.log(cubes);       
     }
     function update_cubes(count, multiple, buffer){
         for (var i=0; i<count; i++){                       
@@ -141,7 +140,7 @@ window.onload=function(){
     //     {color: 0xff0000, wireframe: false}); 
     var screen_size = new THREE.Vector2;
     render.getDrawingBufferSize(screen_size);
-    console.log(screen_size);
+    // console.log(screen_size);
     var cMaterial = new THREE.ShaderMaterial( {
         uniforms: {
             // time: { value: 1.0 },
@@ -149,7 +148,7 @@ window.onload=function(){
             u_width: {value: screen_size.x},
             u_height: {value: screen_size.y}
         },        
-        vertexShader: document.getElementById ('vertexShader').textContent,
+        vertexShader: document.getElementById ('analyser_vertexShader').textContent,
         fragmentShader: document.getElementById ('analyser_fragmentShader').textContent
     });        
     var sz = new THREE.Vector3; 
@@ -282,7 +281,7 @@ window.onload=function(){
            
         strela = meshes2[0];
         strela.material = new THREE.MeshPhongMaterial({specular: 0x222222, color: 0x0000ff});
-        console.log(meshes);
+        // console.log(meshes);
         strela.castShadow = true;
         strela.position.set(0, 1, 30);
         scene.add(strela);
