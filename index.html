@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Three.js</title>
+    <script src="js/three.min.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/OrbitControls.js"></script> 
+	<script type="module">
+		//import {dou} from '/js/dog.js';
+	</script>
+	<!-- <script src="js/Raycaster.js"></script> -->
+	<!-- <script src="js/three.module.js"></script> -->
+    <!-- <script src="js/GLTFLoader.js"></script> -->
+    <!-- <script src="js/TrackballControls.js"></script> -->
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;		
+        }
+        .indicate{
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            font-size: 20px;
+            outline: 1px solid #ccc;
+        }
+		.bg-block{
+			position: absolute;
+			top: 30%;
+			left: 30%;
+			z-index: -1;
+			display: block;
+			/* //height: 1000px;
+			//line-height: 100%;
+			//text-align: center; */
+			font-size: 96px;			
+		}
+		.text-background{
+			/* //margin: auto; */
+		}
+		.info{
+			display: block;
+			position: absolute;
+			z-index: 1;
+			font-size: 36px;
+			top: 350px;
+		}
+		.btn{
+			min-width: 100px;
+			min-height: 40px;
+			position: relative;
+			left: 30px;
+		}
+		.btn:hover{
+			cursor: pointer;
+			background-color: #ccc;
+		}
+    </style>
+	<script id="vertexShader" type="x-shader/x-vertex">
+	// vertex shader's code goes here
+		varying vec2 vUv;
+		void main() {
+			vUv = uv;
+			gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+		}	
+	</script>
+	<script id="fragmentShader" type="x-shader/x-fragment">
+	// fragment shader's code goes here
+		#define EPSILON 0.05
+		varying vec2 vUv;
+		void main() {
+			//gl_FragColor = vec4(0.0, 0.58, 0.86, 1.0);
+			if ((fract(vUv.x * 10.0) < EPSILON)
+				|| (fract(vUv.y * 10.0) < EPSILON)) {
+				gl_FragColor = vec4(vec3(0.0), 1.0);
+			} else {
+				//gl_FragColor = vec4(1.0);
+				gl_FragColor = vec4(1.0, 1.0*sin(vUv.x*3.0), 0.0, 1.0);
+			}
+		}	
+	</script>
+	<script id="analyser_vertexShader" type="x-shader/x-vertex">
+		// vertex shader's code goes here
+			varying vec2 vUv;
+			void main() {
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}	
+		</script>
+		<script id="analyser_fragmentShader" type="x-shader/x-fragment">
+		// fragment shader's code goes here
+			uniform float u_width;
+			uniform float u_height;
+			varying vec2 vUv;
+			void main() {
+				//gl_FragColor = vec4(gl_FragCoord.x*2.0/u_width, 0.0, gl_FragCoord.y/u_height, 1.0);
+				//gl_FragColor = vec4(1.0*sin(gl_FragCoord.x*0.02), 1.0, 0.0, 1.0);
+				//gl_FragColor = vec4(fract(vUv.y * 1.0), fract(vUv.x), 1.0-fract(vUv.y * 1.0), 1.0);
+				gl_FragColor = vec4(fract(vUv.y * 1.0), sin(vUv.x*0.5), 1.0-fract(vUv.y * 1.0), 1.0);
+				
+			}	
+		</script>
+	<div class="bg-block"><p class="text-background">BACKGROUND</p></div>
+	<p class="indicate">indici</p>
+	
+    <div class="info">
+		<button class="btn">Play Audio</button>
+		<p class="info-p">Навігація:<br>Клавіші &#8592;&#8593;&#8594;&#8595;<br> і мишка</p>
+	</div>
+</body>
+</html>
