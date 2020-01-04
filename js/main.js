@@ -69,12 +69,12 @@ window.onload=function(){
 	audioLoader.load( 'sounds/song.mp3', function( buffer ) {
 		sound.setBuffer( buffer );
          //sound.setRefDistance( 20 );
-        sound.setVolume(1);
+        sound.setVolume(0.5);
         //sound.play();
         // console.log(buffer);
     });
     // create an AudioAnalyser, passing in the sound and desired fftSize
-    var analyser = new THREE.AudioAnalyser( sound, 32 );
+    var analyser = new THREE.AudioAnalyser( sound, 64 );
    // listener.addEventListener('canplay', function(){});
 
     // get the average frequency of the sound
@@ -113,10 +113,10 @@ window.onload=function(){
 
     var cubes = [];
  
-    function create_cubes(count, mat, size){      
+    function create_cubes(buffer, mat, size){      
         var cubes_g = [];
         var pos = 0;
-        for (var i=0; i<count; i++){
+        for (var i=0; i<buffer.length; i++){
             cubes_g[i] = new THREE.CubeGeometry(size.x, size.y, size.z)
             cubes[i] = new THREE.Mesh(cubes_g[i], mat);
             cubes[i].position.x = i * (size.x + size.x*0.01);
@@ -126,8 +126,9 @@ window.onload=function(){
         }
         // console.log(cubes);       
     }
-    function update_cubes(count, multiple, buffer){
-        for (var i=0; i<count; i++){                       
+    function update_cubes(multiple, buffer){
+        // console.log(buffer.length);
+        for (var i=0; i<buffer.length; i++){                       
             var tmp = multiple * buffer[i];
             if (tmp<0.5)
                 tmp = 0.5;
@@ -155,7 +156,7 @@ window.onload=function(){
     sz.x = 1;
     sz.y = 1; 
     sz.z = 1;
-    create_cubes(16, cMaterial, sz);  
+    create_cubes(analyser.data, cMaterial, sz);  
 //==========================end cube audio============================
 
     var cubeGeometry = new THREE.CubeGeometry(4,4,4);
@@ -372,7 +373,7 @@ window.onload=function(){
         ind[0].innerHTML = 'x=' + x + '<br>' + 'z=' + z + '<br>' +'angle=' + angle*180/Math.PI + '<br>';
         analyser.getAverageFrequency();
         //ind[0].innerHTML = 'sound data= ' + analyser.data + '<br>' + analyser.getAverageFrequency();
-        update_cubes(16, 0.05, analyser.data);
+        update_cubes(0.07, analyser.data);
 
         //console.log(camera.getWorldDirection(vec3));
         //console.log('sound data= ' + analyser.data);
