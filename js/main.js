@@ -69,7 +69,7 @@ window.onload=function(){
 	audioLoader.load( 'sounds/song.mp3', function( buffer ) {
 		sound.setBuffer( buffer );
          //sound.setRefDistance( 20 );
-        sound.setVolume(0.5);
+        sound.setVolume(0.7);
         //sound.play();
         // console.log(buffer);
     });
@@ -79,11 +79,6 @@ window.onload=function(){
 
     // get the average frequency of the sound
     // var data = analyser.getAverageFrequency();
-    //console.log('sound freq= ' + analyser.getAverageFrequency()); 
-    //console.log('sound data= ' + analyser.data);
-    // this.console.log(analyser);
-    // console.log(analyser.getFrequencyData ());
-
 	// create an object for the sound to play from
 	// var sphere = new THREE.SphereGeometry( 7, 32, 16 );
 	// var material = new THREE.MeshPhongMaterial( { color: 0xff2200 } );
@@ -115,19 +110,19 @@ window.onload=function(){
  
     function create_cubes(buffer, mat, size){      
         var cubes_g = [];
-        var pos = 0;
+        var pos = -10;
         for (var i=0; i<buffer.length; i++){
             cubes_g[i] = new THREE.CubeGeometry(size.x, size.y, size.z)
             cubes[i] = new THREE.Mesh(cubes_g[i], mat);
-            cubes[i].position.x = i * (size.x + size.x*0.01);
+            cubes[i].position.x = pos + i * (size.x + size.x*0.01);
             cubes[i].position.y = 1;             
-            cubes[i].position.z = -15;
+            cubes[i].position.z = -20;
             scene.add(cubes[i]);
         }
         // console.log(cubes);       
     }
     function update_cubes(multiple, buffer){
-        // console.log(buffer.length);
+        // console.log(buffer);
         for (var i=0; i<buffer.length; i++){                       
             var tmp = multiple * buffer[i];
             if (tmp<0.5)
